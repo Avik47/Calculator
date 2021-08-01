@@ -11,7 +11,7 @@ private const val STATE_OPERAND_STORED="Operand_Stored"
 class MainActivity : AppCompatActivity() {
     private var operand1: Double? = null
     private var pendingOperation = "="
-
+    var abx=5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
