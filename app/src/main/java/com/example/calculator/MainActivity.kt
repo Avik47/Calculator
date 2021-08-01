@@ -50,6 +50,23 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(opListener)
         buttonMultiply.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
+
+        buttonNeg.setOnClickListener { view ->
+            val value = newNumber.text.toString()
+            if (value.isEmpty())
+                newNumber.setText("-")
+            else {
+                try {
+                    var doubleValue = value.toDouble()
+                    doubleValue *= -1
+                    newNumber.setText(doubleValue.toString())
+                } catch (e: NumberFormatException) {
+                    //newNumber was '-' or'.'
+                    newNumber.setText("")
+                }
+            }
+
+        }
     }
 
     private fun performOperation(
@@ -89,12 +106,10 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        if (savedInstanceState.getBoolean(STATE_OPERAND_STORED,false))
-        {
-            operand1=savedInstanceState.getDouble(STATE_OPERAND1)
-        }
-        else
-            operand1=null
+        operand1 = if (savedInstanceState.getBoolean(STATE_OPERAND_STORED,false)) {
+            savedInstanceState.getDouble(STATE_OPERAND1)
+        } else
+            null
         pendingOperation= savedInstanceState.getString(STATE_PENDING_OPERATION).toString()
         operation.text=pendingOperation
     }
