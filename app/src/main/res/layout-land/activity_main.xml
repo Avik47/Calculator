@@ -7,6 +7,25 @@
     android:focusable="false"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/buttonPow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="48dp"
+        android:text="X^Y"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonMinus"
+        tools:layout_editor_absoluteX="454dp" />
+
+    <Button
+        android:id="@+id/buttonSqrt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:minWidth="48dp"
+        android:text="SQRT"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonMultiply"
+        app:layout_constraintStart_toEndOf="@+id/buttonMultiply" />
+
     <EditText
         android:id="@+id/result"
         android:layout_width="wrap_content"

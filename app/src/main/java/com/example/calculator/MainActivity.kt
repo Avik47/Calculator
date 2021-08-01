@@ -5,13 +5,14 @@ import android.view.View
 import android.widget.Button
 import java.lang.NumberFormatException
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.sqrt
+
 private const val STATE_PENDING_OPERATION="PendingOperation"
 private const val STATE_OPERAND1="Operand1"
 private const val STATE_OPERAND_STORED="Operand_Stored"
 class MainActivity : AppCompatActivity() {
     private var operand1: Double? = null
     private var pendingOperation = "="
-    var abx=5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         button9.setOnClickListener(listener)
         buttonDot.setOnClickListener(listener)
 
+
         val opListener = View.OnClickListener { v ->
             val op = (v as Button).text.toString()
             try {
@@ -49,6 +51,9 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(opListener)
         buttonMultiply.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
+        buttonPlus.setOnClickListener(opListener)
+        buttonSqrt.setOnClickListener(opListener)
+        buttonPow.setOnClickListener(opListener)
 
         buttonNeg.setOnClickListener { view ->
             val value = newNumber.text.toString()
@@ -89,6 +94,8 @@ class MainActivity : AppCompatActivity() {
             "X" -> operand1 = operand1!! * value
             "+" -> operand1 = operand1!! + value
             "-" -> operand1 = operand1!! - value
+            "SQRT"->operand1= sqrt(value)
+            "X^Y"->operand1= Math.pow(operand1!!,value)
         }
         result.setText(operand1.toString())
         newNumber.setText("")
