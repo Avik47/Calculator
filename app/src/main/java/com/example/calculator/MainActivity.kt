@@ -71,6 +71,13 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+        buttonC.setOnClickListener{ view->
+            val value: Double?
+            value=null
+            operand1=null
+            result.setText("")
+            operation.text = ""
+        }
     }
 
     private fun performOperation(
