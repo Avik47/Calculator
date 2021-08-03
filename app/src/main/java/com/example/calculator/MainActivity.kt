@@ -12,6 +12,7 @@ private const val STATE_OPERAND1="Operand1"
 private const val STATE_OPERAND_STORED="Operand_Stored"
 class MainActivity : AppCompatActivity() {
     private var operand1: Double? = null
+    private var operand2: Double = 0.0
     private var pendingOperation = "="
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,12 +73,21 @@ class MainActivity : AppCompatActivity() {
 
         }
         buttonC.setOnClickListener{ view->
-            val value: Double?
-            value=null
+            val value:Double?
             operand1=null
             result.setText("")
             operation.text = ""
         }
+        buttonBack.setOnClickListener { view->
+            var str: String = newNumber.getText().toString()
+            if (str.length > 1) {
+                str = str.substring(0, str.length - 1)
+                newNumber.setText(str)
+            } else if (str.length <= 1) {
+                newNumber.setText("")
+            }
+        }
+
     }
 
     private fun performOperation(

@@ -8,9 +8,19 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="75dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:minWidth="48dp"
+        android:text="BACK"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonNeg"
+        app:layout_constraintStart_toEndOf="@+id/buttonNeg" />
+
+    <Button
         android:id="@+id/buttonC"
         android:layout_width="75dp"
-        android:layout_height="47dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:minWidth="48dp"
         android:text="C"
@@ -29,8 +39,8 @@
 
     <Button
         android:id="@+id/buttonSqrt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:minWidth="48dp"
         android:text="SQRT"
@@ -183,8 +193,8 @@
 
     <Button
         android:id="@+id/buttonNeg"
-        android:layout_width="73dp"
-        android:layout_height="47dp"
+        android:layout_width="75dp"
+        android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:minWidth="48dp"
         android:text="NEG"
