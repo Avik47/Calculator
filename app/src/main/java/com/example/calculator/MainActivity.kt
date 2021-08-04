@@ -1,19 +1,22 @@
 package com.example.calculator
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import java.lang.NumberFormatException
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.pow
 import kotlin.math.sqrt
 
-private const val STATE_PENDING_OPERATION="PendingOperation"
-private const val STATE_OPERAND1="Operand1"
-private const val STATE_OPERAND_STORED="Operand_Stored"
+private const val STATE_PENDING_OPERATION = "PendingOperation"
+private const val STATE_OPERAND1 = "Operand1"
+private const val STATE_OPERAND_STORED = "Operand_Stored"
+
 class MainActivity : AppCompatActivity() {
     private var operand1: Double? = null
-    private var operand2: Double = 0.0
     private var pendingOperation = "="
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,11 +55,10 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(opListener)
         buttonMultiply.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
-        buttonPlus.setOnClickListener(opListener)
         buttonSqrt.setOnClickListener(opListener)
         buttonPow.setOnClickListener(opListener)
 
-        buttonNeg.setOnClickListener { view ->
+        buttonNeg.setOnClickListener {
             val value = newNumber.text.toString()
             if (value.isEmpty())
                 newNumber.setText("-")
@@ -72,14 +74,13 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        buttonC.setOnClickListener{ view->
-            val value:Double?
-            operand1=null
+        buttonC.setOnClickListener {
+            operand1 = null
             result.setText("")
             operation.text = ""
         }
-        buttonBack.setOnClickListener { view->
-            var str: String = newNumber.getText().toString()
+        buttonBack.setOnClickListener {
+            var str: String = newNumber.text.toString()
             if (str.length > 1) {
                 str = str.substring(0, str.length - 1)
                 newNumber.setText(str)
@@ -103,16 +104,16 @@ class MainActivity : AppCompatActivity() {
         }
         when (pendingOperation) {
             "=" -> operand1 = value
-            "/" -> operand1 = if (value == 0.0) {
-                Double.NaN
-            } else {
-                operand1!! / value
-            }
+            "/" -> operand1 = (if (value == 0.0) Double.NaN else operand1!! / value)
             "X" -> operand1 = operand1!! * value
             "+" -> operand1 = operand1!! + value
             "-" -> operand1 = operand1!! - value
-            "SQRT"->operand1= sqrt(value)
-            "X^Y"->operand1= Math.pow(operand1!!,value)
+            "SQRT" -> operand1 = sqrt(value)
+            "X^Y" -> operand1 = if(operand1==0.0&&value==0.0)
+                Double.NaN
+            else
+                operand1!!.pow(value)
+
         }
         result.setText(operand1.toString())
         newNumber.setText("")
@@ -121,19 +122,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if(operand1!=null) {
+        if (operand1 != null) {
             outState.putDouble(STATE_OPERAND1, operand1!!)
-            outState.putBoolean(STATE_OPERAND_STORED,true)
+            outState.putBoolean(STATE_OPERAND_STORED, true)
         }
-        outState.putString(STATE_PENDING_OPERATION,pendingOperation)
+        outState.putString(STATE_PENDING_OPERATION, pendingOperation)
     }
+
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        operand1 = if (savedInstanceState.getBoolean(STATE_OPERAND_STORED,false)) {
+        operand1 = if (savedInstanceState.getBoolean(STATE_OPERAND_STORED, false)) {
             savedInstanceState.getDouble(STATE_OPERAND1)
         } else
             null
-        pendingOperation= savedInstanceState.getString(STATE_PENDING_OPERATION).toString()
-        operation.text=pendingOperation
+        pendingOperation = savedInstanceState.getString(STATE_PENDING_OPERATION).toString()
+        operation.text = pendingOperation
     }
 }
